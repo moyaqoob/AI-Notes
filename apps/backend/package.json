@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "bun run src/index.ts",
-    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun --minify && bun scripts/postbuild.ts",
+    "start": "bun dist/index.js",
     "check-types": "tsc --noEmit",
     "db:migrate": "bun run migrations/run.ts"
   },
@@ -25,5 +26,8 @@
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0",
     "zod": "^4.4.3"
+  },
+  "engines": {
+    "bun": ">=1.3.0"
   }
 }

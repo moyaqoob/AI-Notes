@@ -43,7 +43,9 @@ app.get("/api/share/:share_id", async (req, res, next) => {
 
 app.use(errorHandler)
 
-await runMigrations()
+if (process.env.RUN_MIGRATIONS_ON_START !== "false") {
+  await runMigrations()
+}
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
