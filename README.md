@@ -186,6 +186,46 @@ npm run check-types
 npm run lint
 ```
 
+## Deployment
+
+### Build (from repo root)
+
+```bash
+bun install
+bun run build
+```
+
+This builds the Next.js frontend (`apps/web/.next`) and bundles the backend (`apps/backend/dist`).
+
+### Environment variables
+
+| App | File | Required variables |
+|-----|------|-------------------|
+| Backend | `apps/backend/.env` | `POSTGRES`, `JWT_SECRET`, `GEMINI_API_KEY`, `CORS_ORIGIN`, `PORT` |
+| Frontend | `apps/web/.env.local` | `NEXT_PUBLIC_API_URL` (your deployed API URL) |
+
+Copy from the `.env.example` files in each app directory.
+
+### Database
+
+Run migrations before starting the API (or on each deploy):
+
+```bash
+bun run db:migrate
+```
+
+### Production start
+
+```bash
+# Backend (port 4000)
+bun run start:backend
+
+# Frontend (port 3000)
+bun run start:web
+```
+
+**Typical hosting:** deploy the backend to Railway/Fly/Render (Bun runtime, `build` + `start` commands above). Deploy the frontend to Vercel with `NEXT_PUBLIC_API_URL` pointing at your API. Set backend `CORS_ORIGIN` to your frontend URL.
+
 ## API Endpoints
 
 ### Auth
